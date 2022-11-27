@@ -85,6 +85,39 @@ public class GameManager : MonoBehaviour
                 a.StopTimer();
                 endPanelTimeText.text = (a.minutes < 10 ? "0" : "") + a.minutes + ":" + (a.seconds < 10 ? "0" : "") + a.seconds;
 
+                //Saving and Loading Player Best Score
+                
+                // If Player is playing for the first time
+                int bestTime; 
+
+                if (PlayerPrefs.HasKey("bestTime"))
+                {
+                    bestTime = PlayerPrefs.GetInt("bestTime");
+                }
+                else
+                {
+                    bestTime = 99999;
+                }
+                // Till Here
+
+                //Saving and Loading Player Best Score
+                int playerTime = a.minutes * 60 + a.seconds;
+
+                if (playerTime < bestTime)
+                {
+                        newScoreText.SetActive(true);
+                        PlayerPrefs.SetInt("bestTime", playerTime);
+                }
+                else
+                {
+                        int minutes = bestTime / 60;
+                        int seconds = bestTime - minutes*60;
+                        bestScoreText.text = (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+                    bestScoreText.transform.parent.gameObject.SetActive(true);
+                }
+                // Till Here
+                
+
             }
         }
     }
